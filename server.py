@@ -23,9 +23,14 @@ def predict():
     # trasforming the data
     df_data = trasformdata(basket, zipCode, totalAmount)
     
-    # predicting
     
-        
+    
+    #
+    
+    
+    
+    # predicting
+     
     p = probability(df_data)
     #  Return return probability to client (as json)
     return jsonify({'probability': p}), 201
@@ -56,6 +61,19 @@ def trasformdata(basket, zipCode, totalAmount):
     df.drop(["basket", "zipCode"], axis=1, inplace=True)
     print('Data trasformtion completed')
     return df 
+
+
+def check_if_imput_is_needed(df):
+    ipmute_is_need = False
+    not_enough_information = False
+    number_of_nulls = sum(df.isna().sum().values)
+    if number_of_nulls == 1:
+        ipmute_is_need = True
+    if number_of_nulls > 1:
+        not_enough_information = True
+    return ipmute_is_need, not_enough_information
+     
+      
 
 if __name__ == "__main__":
 	app.run(debug=True)
